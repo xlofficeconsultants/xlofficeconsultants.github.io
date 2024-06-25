@@ -37,7 +37,7 @@
 
         function displayOutput() {
             var hmac = generateHMAC();
-            document.getElementById('output').textContent = hmac;
+            document.getElementById('output').textContent = 'HMAC SHA256: ' + hmac;
         }
 
         window.onload = displayOutput;
