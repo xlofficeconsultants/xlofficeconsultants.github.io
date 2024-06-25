@@ -2,28 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HMAC SHA256 Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        #output {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 18px;
-            text-align: center;
-            margin-top: 20px;
-            white-space: pre-wrap; /* Ensures text wraps */
-        }
-    </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/x64-core.js'></script>
@@ -49,19 +28,7 @@
 
             if (timestamp_publickey_url && secret_key) {
                 var hmac = CryptoJS.HmacSHA256(timestamp_publickey_url, secret_key).toString();
-
-                // Create JSON object
-                var jsonContent = {
-                    timestamp_publickey_url: timestamp_publickey_url,
-                    secret_key: secret_key,
-                    hmac_sha256: hmac
-                };
-
-                // Convert JSON object to string
-                var jsonString = JSON.stringify(jsonContent, null, 2);
-
-                // Display JSON string in output element
-                document.getElementById('output').textContent = jsonString;
+                document.body.textContent = hmac;
             } else {
                 alert('Missing parameters in URL');
             }
@@ -71,9 +38,5 @@
     </script>
 </head>
 <body>
-    <h1>HMAC SHA256 Generator</h1>
-    <pre id="output">
-        Generating HMAC SHA256... Please wait.
-    </pre>
 </body>
 </html>
