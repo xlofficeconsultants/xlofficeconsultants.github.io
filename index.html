@@ -29,26 +29,10 @@
             if (timestamp_publickey_url && secret_key) {
                 var hmac = CryptoJS.HmacSHA256(timestamp_publickey_url, secret_key).toString();
 
-                // Create JSON object
-                var jsonResponse = {
-                    status: 'success',
-                    data: {
-                        timestamp_publickey_url: timestamp_publickey_url,
-                        secret_key: secret_key,
-                        hmac_sha256: hmac
-                    }
-                };
-
-                // Output JSON response
-                document.body.textContent = JSON.stringify(jsonResponse, null, 2);
+                // Output HMAC value as plain text
+                document.body.textContent = hmac;
             } else {
-                var errorResponse = {
-                    status: 'error',
-                    message: 'Missing parameters in URL'
-                };
-
-                // Output JSON error response
-                document.body.textContent = JSON.stringify(errorResponse, null, 2);
+                document.body.textContent = 'Missing parameters in URL';
             }
         }
 
