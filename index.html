@@ -22,6 +22,12 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .download-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js'></script>
@@ -54,16 +60,37 @@
             }
         }
 
-        function displayOutput() {
+        function downloadHMAC() {
             var hmac = generateHMAC();
-            document.getElementById('output').textContent = 'HMAC SHA256: ' + hmac;
+            var filename = 'hmac_sha256.txt';
+            var blob = new Blob([hmac], { type: 'text/plain' });
+
+            // Create download link element
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename;
+
+            // Append the link to the body
+            document.body.appendChild(link);
+
+            // Fire click event of the link
+            link.click();
+
+            // Clean up
+            document.body.removeChild(link);
         }
 
-        window.onload = displayOutput;
+        window.onload = function() {
+            var hmac = generateHMAC();
+            document.getElementById('output').textContent = hmac;
+
+        };
     </script>
 </head>
 <body>
-    <h1>HMAC SHA256 Generator</h1>
+    <h1>HMAC SHA256 Generator<div id="output">
+        <!-- Output will be inserted here -->
+    </div></h1>
     <div id="output">
         <!-- Output will be inserted here -->
     </div>
