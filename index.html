@@ -48,24 +48,38 @@
 
             if (timestamp_publickey_url && secret_key) {
                 var hmac = CryptoJS.HmacSHA256(timestamp_publickey_url, secret_key).toString();
-                return hmac;
+                downloadHMAC(hmac);
             } else {
-                return 'Missing parameters in URL';
+                alert('Missing parameters in URL');
             }
         }
 
-        function displayOutput() {
-            var hmac = generateHMAC();
-            document.getElementById('output').textContent = 'HMAC SHA256: ' + hmac;
+        function downloadHMAC(hmac) {
+            var filename = 'hmac_sha256.txt';
+            var blob = new Blob([hmac], { type: 'text/plain' });
+
+            // Create anchor element and set attributes
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename;
+
+            // Append anchor element to body
+            document.body.appendChild(link);
+
+            // Trigger click event to download file
+            link.click();
+
+            // Remove anchor element from body
+            document.body.removeChild(link);
         }
 
-        window.onload = displayOutput;
+        window.onload = generateHMAC;
     </script>
 </head>
 <body>
     <h1>HMAC SHA256 Generator</h1>
     <div id="output">
-        <!-- Output will be inserted here -->
+        Generating HMAC SHA256... Please wait.
     </div>
 </body>
 </html>
