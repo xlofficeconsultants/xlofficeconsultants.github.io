@@ -21,12 +21,7 @@
             font-size: 18px;
             text-align: center;
             margin-top: 20px;
-        }
-
-        .download-link {
-            display: block;
-            margin-top: 20px;
-            text-align: center;
+            white-space: pre-wrap; /* Ensures text wraps */
         }
     </style>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js'></script>
@@ -54,43 +49,31 @@
 
             if (timestamp_publickey_url && secret_key) {
                 var hmac = CryptoJS.HmacSHA256(timestamp_publickey_url, secret_key).toString();
-                return hmac;
+
+                // Create JSON object
+                var jsonContent = {
+                    timestamp_publickey_url: timestamp_publickey_url,
+                    secret_key: secret_key,
+                    hmac_sha256: hmac
+                };
+
+                // Convert JSON object to string
+                var jsonString = JSON.stringify(jsonContent, null, 2);
+
+                // Display JSON string in output element
+                document.getElementById('output').textContent = jsonString;
             } else {
-                return 'Missing parameters in URL';
+                alert('Missing parameters in URL');
             }
         }
 
-        function downloadHMAC() {
-            var hmac = generateHMAC();
-            var filename = 'hmac_sha256.txt';
-            var blob = new Blob([hmac], { type: 'text/plain' });
-
-            // Create download link element
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = filename;
-
-            // Append the link to the body
-            document.body.appendChild(link);
-
-            // Fire click event of the link
-            link.click();
-
-            // Clean up
-            document.body.removeChild(link);
-        }
-
-        window.onload = function() {
-            var hmac = generateHMAC();
-            document.getElementById('output').textContent = hmac;
-
-        };
+        window.onload = generateHMAC;
     </script>
 </head>
 <body>
-    <h1><div id="output"></div></h1>
-    <div id="output">
-        <!-- Output will be inserted here -->
-    </div>
+    <h1>HMAC SHA256 Generator</h1>
+    <pre id="output">
+        Generating HMAC SHA256... Please wait.
+    </pre>
 </body>
 </html>
