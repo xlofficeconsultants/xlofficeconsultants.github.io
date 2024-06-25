@@ -1,44 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HMAC SHA256 Generator API</title>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/x64-core.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha512.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha256.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js'></script>
-    <script>
-        function getQueryParams() {
-            var params = {};
-            var queryString = window.location.search.substring(1);
-            var regex = /([^&=]+)=([^&]*)/g;
-            var match;
-            while (match = regex.exec(queryString)) {
-                params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-            }
-            return params;
-        }
-
-        function generateHMAC() {
-            var params = getQueryParams();
-            var timestamp_publickey_url = params['timestamp_publickey_url'];
-            var secret_key = params['secret_key'];
-
-            if (timestamp_publickey_url && secret_key) {
-                var hmac = CryptoJS.HmacSHA256(timestamp_publickey_url, secret_key).toString();
-
-                // Output HMAC value as plain text
-                document.body.textContent = hmac;
-            } else {
-                document.body.textContent = 'Missing parameters in URL';
-            }
-        }
-
-        window.onload = generateHMAC;
-    </script>
-</head>
-<body>
-</body>
-</html>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/x64-core.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha512.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha256.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js'></script>
