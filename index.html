@@ -37,7 +37,7 @@
 
         function displayOutput() {
             var hmac = generateHMAC();
-            document.getElementById('output').innerHTML = '<tr><td>HMAC SHA256</td><td>' + hmac + '</td></tr>';
+            document.getElementById('output').textContent = hmac;
         }
 
         window.onload = displayOutput;
@@ -45,16 +45,8 @@
 </head>
 <body>
     <h1>HMAC SHA256 Generator</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody id="output">
-            <!-- Output will be inserted here -->
-        </tbody>
-    </table>
+    <p id="output">
+        <!-- Output will be inserted here -->
+    </p>
 </body>
 </html>
