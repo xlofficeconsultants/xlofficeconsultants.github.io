@@ -2,44 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HMAC SHA256 Generator</title>
-    <!-- Include CryptoJS library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/x64-core.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha256.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f7f7f7;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-        }
-        pre {
-            background-color: #fff;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>HMAC SHA256 Generator</h1>
-        <pre id="output"></pre>
-    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/x64-core.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha512.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha256.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js'></script>
     <script>
-        // Function to parse query parameters from the URL
         function getQueryParams() {
             var params = {};
             var queryString = window.location.search.substring(1);
@@ -51,32 +22,39 @@
             return params;
         }
 
-        // Function to calculate HMAC SHA256
-        function calculateHMAC(data, key) {
-            return CryptoJS.HmacSHA256(data, key).toString(CryptoJS.enc.Hex);
-        }
-
-        // Main function to generate HMAC based on URL parameters and display JSON response
         function generateHMAC() {
             var params = getQueryParams();
             var timestamp_publickey_url = params['timestamp_publickey_url'];
             var secret_key = params['secret_key'];
 
-            var response;
             if (timestamp_publickey_url && secret_key) {
-                var hmac = calculateHMAC(timestamp_publickey_url, secret_key);
-                response = { hmac: hmac };
+                var hmac = CryptoJS.HmacSHA256(timestamp_publickey_url, secret_key).toString();
+                return hmac;
             } else {
-                response = { error: 'Missing parameters in URL' };
+                return 'Missing parameters in URL';
             }
-
-            // Output JSON response as plain text
-            var outputDiv = document.getElementById('output');
-            outputDiv.textContent = JSON.stringify(response, null, 2);
         }
 
-        // Call generateHMAC function on window load
-        window.onload = generateHMAC;
+        function displayOutput() {
+            var hmac = generateHMAC();
+            document.getElementById('output').innerHTML = '<tr><td>HMAC SHA256</td><td>' + hmac + '</td></tr>';
+        }
+
+        window.onload = displayOutput;
     </script>
+</head>
+<body>
+    <h1>HMAC SHA256 Generator</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody id="output">
+            <!-- Output will be inserted here -->
+        </tbody>
+    </table>
 </body>
 </html>
