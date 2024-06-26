@@ -11,21 +11,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js"></script>
     <style>
         body {
-            margin: 0;
-            font-family: monospace;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #f7f7f7;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
         }
         pre {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             white-space: pre-wrap;
             word-wrap: break-word;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>HMAC SHA256 Generator</h1>
+        <pre id="output"></pre>
+    </div>
     <script>
         // Function to parse query parameters from the URL
         function getQueryParams() {
@@ -59,7 +71,8 @@
             }
 
             // Output JSON response as plain text
-            document.body.innerHTML = '<pre>' + JSON.stringify(response, null, 2) + '</pre>';
+            var outputDiv = document.getElementById('output');
+            outputDiv.textContent = JSON.stringify(response, null, 2);
         }
 
         // Call generateHMAC function on window load
