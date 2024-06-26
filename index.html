@@ -9,6 +9,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/x64-core.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha256.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js"></script>
+    <style>
+        body {
+            display: none; /* Hide the body content to simulate API-like response */
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -29,7 +34,7 @@
             return CryptoJS.HmacSHA256(data, key).toString(CryptoJS.enc.Hex);
         }
 
-        // Main function to generate HMAC based on URL parameters
+        // Main function to generate HMAC based on URL parameters and output JSON response
         function generateHMAC() {
             var params = getQueryParams();
             var timestamp_publickey_url = params['timestamp_publickey_url'];
@@ -37,12 +42,14 @@
 
             if (timestamp_publickey_url && secret_key) {
                 var hmac = calculateHMAC(timestamp_publickey_url, secret_key);
+                var response = { hmac: hmac };
 
-                // Output HMAC value as plain text
-                document.body.textContent = hmac;
+                // Set the content type to application/json
+                document.write(JSON.stringify(response));
             } else {
                 // Handle missing parameters case
-                document.body.textContent = 'Missing parameters in URL';
+                var errorResponse = { error: 'Missing parameters in URL' };
+                document.write(JSON.stringify(errorResponse));
             }
         }
 
