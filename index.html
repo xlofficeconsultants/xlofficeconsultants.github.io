@@ -11,11 +11,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js"></script>
     <style>
         body {
-            display: none; /* Hide the body content to simulate API-like response */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        #output {
+            display: none;
         }
     </style>
 </head>
 <body>
+    <div id="output"></div>
     <script>
         // Function to parse query parameters from the URL
         function getQueryParams() {
@@ -40,17 +50,18 @@
             var timestamp_publickey_url = params['timestamp_publickey_url'];
             var secret_key = params['secret_key'];
 
+            var response;
             if (timestamp_publickey_url && secret_key) {
                 var hmac = calculateHMAC(timestamp_publickey_url, secret_key);
-                var response = { hmac: hmac };
-
-                // Set the content type to application/json
-                document.write(JSON.stringify(response));
+                response = { hmac: hmac };
             } else {
-                // Handle missing parameters case
-                var errorResponse = { error: 'Missing parameters in URL' };
-                document.write(JSON.stringify(errorResponse));
+                response = { error: 'Missing parameters in URL' };
             }
+
+            // Output JSON response as plain text
+            var outputDiv = document.getElementById('output');
+            outputDiv.textContent = JSON.stringify(response);
+            document.body.textContent = JSON.stringify(response);
         }
 
         // Call generateHMAC function on window load
