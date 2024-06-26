@@ -11,8 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac.js"></script>
 </head>
 <body>
-    <div id="result"></div>
-
     <script>
         // Function to parse query parameters from the URL
         function getQueryParams() {
@@ -40,13 +38,11 @@
             if (timestamp_publickey_url && secret_key) {
                 var hmac = calculateHMAC(timestamp_publickey_url, secret_key);
 
-                // Display result on the page
-                var resultDiv = document.getElementById('result');
-                resultDiv.textContent = hmac;
+                // Output HMAC value as plain text
+                document.body.textContent = hmac;
             } else {
                 // Handle missing parameters case
-                var resultDiv = document.getElementById('result');
-                resultDiv.textContent = 'Missing parameters in URL';
+                document.body.textContent = 'Missing parameters in URL';
             }
         }
 
